@@ -7,18 +7,18 @@
 
 ## Introduction
 
-This is Udacity's Self-Driving Car Nanodegree Term2 MPC Project.
-In this project you'll implement Model Predictive Control (MPC) to drive the car around the track.  
-The basic idea of MPC is to predict the states of the car by considering the equations of motions of the car and minimizing a cost.  
+* This is Udacity's Self-Driving Car Nanodegree Term2 MPC Project.
+* In this project you'll implement Model Predictive Control (MPC) to drive the car around the track.  
+* The basic idea of MPC is to predict the states of the car by considering the equations of motions of the car and minimizing a cost.  
 
 ---
 
 ## Model
 
-The model of the MPC is a basic **kinematic model**. Not dynamic model. For more details, refer to [this paper](http://www.me.berkeley.edu/~frborrel/pdfpub/IV_KinematicMPC_jason.pdf).  
-The state of the vehicle consists of `x-position`, `y-position`, `psi` (orientation(heading direction)), `v` (velocity), `CTE` (cross-track-eror), `epsi` (orientation error)   
-Actuator consists of `steering angle` and `acceleration`.(positive = throttle, negative = brake)
-In simulator, MPC predicted trajectory is represented in green, and reference to the vehicle's coordinate is represented in yellow.
+* The model of the MPC is a basic **kinematic model**. Not dynamic model. For more details, refer to [this paper](http://www.me.berkeley.edu/~frborrel/pdfpub/IV_KinematicMPC_jason.pdf).  
+* The state of the vehicle consists of `x-position`, `y-position`, `psi` (orientation(heading direction)), `v` (velocity), `CTE` (cross-track-eror), `epsi` (orientation error)   
+* Actuator consists of `steering angle` and `acceleration`.(positive = throttle, negative = brake)
+* In simulator, MPC predicted trajectory is represented in green, and reference to the vehicle's coordinate is represented in yellow.
 
 ### Environment  
   
@@ -27,6 +27,10 @@ In simulator, MPC predicted trajectory is represented in green, and reference to
   * CPU : Intel Core i7-6850K CPU @ 3.60GHz x 12 ea
   * GPU : Titan X (Pascal) x 4 ea
 * Ipopt-3.12.1  
+* Tested Simulator
+  * Term_2_Simulator_V1.3_Updated_MPC_ubuntu
+  * Term_2_Simulator_v1.4_Localization_ubuntu
+  * Term_2_Simulator_v1.45_PID_ubuntu
 
 ## Dependencies
 
@@ -79,7 +83,7 @@ In simulator, MPC predicted trajectory is represented in green, and reference to
 
 ### Model
 
-The vehicle model is a kinematic model and these are the equations for the model :
+* The vehicle model is a kinematic model and these are the equations for the model :
 
 ```
 x_[t] = x[t-1] + v[t-1] * cos(psi[t-1]) * dt
@@ -92,12 +96,16 @@ epsi[t] = psi[t] - psides[t-1] + v[t-1] * delta[t-1] / Lf * dt
 
 ### Timestep and Elapsed Duration( N, dt)
 
-N is the number of timesteps in the horizon. dt is how much time elapses between actuations. They are hyperparameters and T(N*dt) should be as large as possible, while dt should be as small as possible.  
-To find the appropriate value for N and dt, I tested several values(e.g. N = 7, 10, 15, 20 and corresponding dt value). In my model, N = 10, dt = 0.1 were best values.
+* N is the number of timesteps in the horizon. dt is how much time elapses between actuations. 
+* They are hyperparameters and T(N*dt) should be as large as possible, while dt should be as small as possible.  
+* To find the appropriate value for N and dt, I tested several values(e.g. N = 7, 10, 15, 20 and corresponding dt value). 
+* In my model, N = 10, dt = 0.1 were best values.
 
 ### fitting waypoints & latency
 
-The waypoints of the road are given in the global coordinate. So we need to convert it to the vehicle coordinate. After that, the waypoints are fitted with a 3rd order polynomial.
+* The waypoints of the road are given in the global coordinate. 
+* So I need to convert it to the vehicle coordinate. 
+* After that, the waypoints are fitted with a 3rd order polynomial.
 
 ```
 for (int i = 0; i < ptsx.size(); ++i) {
@@ -111,8 +119,8 @@ for (int i = 0; i < ptsx.size(); ++i) {
 } 
 ```
 
-In our simulator, there is a latency between actuations commands.(100 ms)  
-I considered this latency and the equation is as below.  
+* In the simulator, there is a latency between actuations commands.(100 ms)  
+* I considered this latency and the equation is as below.  
  
 ```
 double latency_x = 0 * v * (100 / 1000);

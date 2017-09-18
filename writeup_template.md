@@ -1,8 +1,8 @@
 # Motion Predictive Control Project
 
 <p align="center">
-    <img src="./image/mpc.png" width="480" alt="main_image" /><br>
-    <b>result image(watch the video below)</b><br>
+    <img src="./mpc_result.gif" width="480" alt="main_image" /><br>
+    <b>result image</b><br>
 </p>
 
 ## Introduction
@@ -22,7 +22,11 @@ In simulator, MPC predicted trajectory is represented in green, and reference to
 
 ### Environment  
   
->Windows 10(x64), i7-4720HQ 2.60GHz, Ipopt-3.12.8  
+* ubuntu 16.04 (64bit)
+  * memory : 62.8 GB
+  * CPU : Intel Core i7-6850K CPU @ 3.60GHz x 12 ea
+  * GPU : Titan X (Pascal) x 4 ea
+* Ipopt-3.12.1  
 
 ## Dependencies
 
@@ -117,10 +121,3 @@ double latency_psi = 0;
 double cte = polyeval(coeffs, 0) - 0;
 double epsi = latency_psi - atan(coeffs[1] + 2 * latency_x * coeffs[2] + 3 * pow(latency_x, 2) * coeffs[3]);
 ```
-
-## Result
-  
-  
-> Click for full HD video
-  
-[![Video mpc](image/mpc2.gif?raw=true)](https://youtu.be/FB-euup4RlY)  
